@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Header } from '@/components/Header';
 import { UrlInput } from '@/components/UrlInput';
@@ -6,17 +5,7 @@ import { TestSuiteUpload } from '@/components/TestSuiteUpload';
 import { PromptQueue } from '@/components/PromptQueue';
 import { ResponseViewer } from '@/components/ResponseViewer';
 import { ControlPanel } from '@/components/ControlPanel';
-
-export interface PromptData {
-  id: string;
-  prompt: string;
-  status: 'pending' | 'running' | 'completed' | 'failed';
-  response?: string;
-  timestamp?: string;
-  tokenUsage?: number;
-  maxTokens?: number;
-  tags?: string[];
-}
+import { PromptData, runTests, getTestResult, TestRunResponse, TestRunResult } from '@/utils/redpromptApi';
 
 const Index = () => {
   const [targetUrl, setTargetUrl] = useState('');
@@ -25,37 +14,36 @@ const Index = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [traceMode, setTraceMode] = useState(false);
   const [currentFilter, setCurrentFilter] = useState('all');
+  const [testRunId, setTestRunId] = useState<string | null>(null);
 
   const handleFileUpload = (uploadedPrompts: PromptData[]) => {
     setPrompts(uploadedPrompts);
     setResponses([]);
   };
 
-  const handleRunTest = () => {
+  const handleRunTest = async () => {
     if (!targetUrl || prompts.length === 0) return;
-    
     setIsRunning(true);
-    
-    // Simulate test execution
-    prompts.forEach((prompt, index) => {
-      setTimeout(() => {
-        const updatedPrompt: PromptData = {
-          ...prompt,
-          status: 'completed',
-          response: generateMockResponse(prompt.prompt),
-          timestamp: new Date().toISOString(),
-          tokenUsage: Math.floor(Math.random() * 150) + 50,
-          maxTokens: 200,
-          tags: generateTags(prompt.prompt)
-        };
-        
-        setResponses(prev => [...prev, updatedPrompt]);
-        
-        if (index === prompts.length - 1) {
+    setResponses([]);
+    try {
+      const runResp: TestRunResponse = await runTests(targetUrl);
+      setTestRunId(runResp.test_run_id);
+      // Poll for results every 2 seconds until status is not 'started'
+      let finished = false;
+      while (!finished) {
+        const result: TestRunResult = await getTestResult(runResp.test_run_id);
+        if (result.status === 'completed' || result.status === 'error') {
+          setResponses(result.results as PromptData[]);
           setIsRunning(false);
+          finished = true;
+        } else {
+          await new Promise(res => setTimeout(res, 2000));
         }
-      }, (index + 1) * 2000);
-    });
+      }
+    } catch (err) {
+      setIsRunning(false);
+      // Optionally, show error to user
+    }
   };
 
   const generateMockResponse = (prompt: string): string => {

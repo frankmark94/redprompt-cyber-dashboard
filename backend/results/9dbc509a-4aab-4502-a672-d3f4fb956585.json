@@ -1,0 +1,9 @@
+{
+  "test_run_id": "9dbc509a-4aab-4502-a672-d3f4fb956585",
+  "target_url": "https://pw25-dms-csfs.pegademo.com/uplus-wss/retail_bank/",
+  "timestamp": "2025-07-02T15:25:46.342173",
+  "status": "error",
+  "error": "",
+  "total_prompts": 5,
+  "results": []
+}

@@ -1,7 +1,11 @@
 
-import { Terminal, Shield, Zap } from 'lucide-react';
+import { Terminal, Shield, Zap, Sun, Moon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export const Header = () => {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <header className="border-b border-red-500/30 bg-black/80 backdrop-blur-sm">
       <div className="container mx-auto px-6 py-4">
@@ -22,6 +26,18 @@ export const Header = () => {
           </div>
           
           <div className="flex items-center space-x-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleTheme}
+              className="text-gray-400 hover:text-red-400"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-4 h-4" />
+              ) : (
+                <Moon className="w-4 h-4" />
+              )}
+            </Button>
             <div className="flex items-center space-x-2 text-green-400">
               <Terminal className="w-4 h-4" />
               <span className="text-sm">ONLINE</span>

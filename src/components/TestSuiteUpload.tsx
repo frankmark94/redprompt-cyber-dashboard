@@ -1,8 +1,9 @@
 
 import { useState } from 'react';
-import { Upload, FileText, Check } from 'lucide-react';
+import { Upload, FileText, Check, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PromptData } from '@/pages/Index';
+import { downloadExampleJSON, downloadExampleCSV } from '@/utils/exampleFiles';
 
 interface TestSuiteUploadProps {
   onFileUpload: (prompts: PromptData[]) => void;
@@ -51,9 +52,31 @@ export const TestSuiteUpload = ({ onFileUpload }: TestSuiteUploadProps) => {
 
   return (
     <div className="bg-gray-900/50 border border-red-500/30 rounded-lg p-6 backdrop-blur-sm">
-      <div className="flex items-center space-x-2 mb-4">
-        <FileText className="w-5 h-5 text-red-500" />
-        <h3 className="text-lg font-semibold text-red-400">TEST SUITE</h3>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center space-x-2">
+          <FileText className="w-5 h-5 text-red-500" />
+          <h3 className="text-lg font-semibold text-red-400">TEST SUITE</h3>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={downloadExampleJSON}
+            className="text-xs text-gray-400 hover:text-green-400"
+          >
+            <Download className="w-3 h-3 mr-1" />
+            JSON
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={downloadExampleCSV}
+            className="text-xs text-gray-400 hover:text-green-400"
+          >
+            <Download className="w-3 h-3 mr-1" />
+            CSV
+          </Button>
+        </div>
       </div>
       
       <div className="space-y-4">
@@ -76,6 +99,9 @@ export const TestSuiteUpload = ({ onFileUpload }: TestSuiteUploadProps) => {
               )}
               <p className="text-sm text-gray-300">
                 {uploadedFile ? uploadedFile.name : 'Upload JSON/CSV test suite'}
+              </p>
+              <p className="text-xs text-gray-500">
+                Download example files above to get started
               </p>
             </div>
           </label>

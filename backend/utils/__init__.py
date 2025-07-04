@@ -1,1 +1,1 @@
-# Utils package for RedPrompt backend 
+# Utils package for RedPrompt backend

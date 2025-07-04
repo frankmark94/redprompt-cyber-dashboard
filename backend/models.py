@@ -72,4 +72,4 @@ class UploadResponse(BaseModel):
 
 class ResultsResponse(BaseModel):
     results: List[TestRunResult]
-    total_runs: int 
+    total_runs: int

@@ -218,4 +218,4 @@ async def execute_tests_background(test_run_id: str, target_url: str, prompts: L
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True) 
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)

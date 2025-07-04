@@ -418,5 +418,5 @@ async def run_prompt_tests(
         await page.close()
     
     logger.info(f"Test run completed. {len([r for r in results if r.status == PromptStatus.completed])} successful, {len([r for r in results if r.status != PromptStatus.completed])} failed")
-    
-    return results 
+
+    return results

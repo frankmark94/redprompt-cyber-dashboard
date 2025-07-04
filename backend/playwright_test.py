@@ -15,4 +15,4 @@ async def main():
         await browser.close()
 
 if __name__ == "__main__":
-    asyncio.run(main()) 
+    asyncio.run(main())

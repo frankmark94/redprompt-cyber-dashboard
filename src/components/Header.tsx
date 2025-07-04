@@ -2,6 +2,7 @@
 import { Terminal, Shield, Zap, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/contexts/ThemeContext';
+import { Link } from 'react-router-dom';
 
 export const Header = () => {
   const { theme, toggleTheme } = useTheme();
@@ -23,6 +24,14 @@ export const Header = () => {
                 AI SECURITY TESTING SUITE
               </p>
             </div>
+            <nav className="ml-8 space-x-4 hidden md:block">
+              <Link to="/" className="text-sm text-gray-300 hover:text-red-400">
+                Dashboard
+              </Link>
+              <Link to="/history" className="text-sm text-gray-300 hover:text-red-400">
+                History
+              </Link>
+            </nav>
           </div>
           
           <div className="flex items-center space-x-4">

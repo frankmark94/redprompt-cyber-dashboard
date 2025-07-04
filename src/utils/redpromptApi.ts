@@ -84,4 +84,4 @@ export async function getTestResult(testRunId: string): Promise<TestRunResult> {
   const res = await fetch(`${API_BASE}/results/${testRunId}`);
   if (!res.ok) throw new Error('Failed to fetch test run result');
   return res.json();
-} 
+}

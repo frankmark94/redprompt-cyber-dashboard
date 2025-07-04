@@ -60,6 +60,16 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Running the backend
+
+After installing dependencies with `pip install -r backend/requirements.txt`, run `playwright install` to download browser binaries required by Playwright. Without this step any Playwright based tests will fail with `ModuleNotFoundError` or missing browser errors.
+
+Start the API with:
+
+```sh
+uvicorn backend.main:app --reload
+```
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/4d1623ad-3603-4457-864f-1afc2762da3d) and click on Share -> Publish.

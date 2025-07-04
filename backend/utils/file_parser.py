@@ -212,5 +212,5 @@ def detect_security_tags(prompt: str) -> List[str]:
     
     if any(char in prompt for char in ['<', '>', '{', '}', '[', ']']):
         tags.append('Structured Input')
-    
-    return tags 
+
+    return tags
